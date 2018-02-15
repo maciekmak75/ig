@@ -1,0 +1,17 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: catia_proe
+    database_user: catia_proe
+    database_password: Ex-c6erafEs
+    #database_host: mysql10.mydevil.net
+    #database_port: null
+    #database_name: m1006_eclicencje
+    #database_user: m1006_eclicencje
+    #database_password: aeVZl0hjJxsOhhZLONfs
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    secret: pAha4rA4udracha

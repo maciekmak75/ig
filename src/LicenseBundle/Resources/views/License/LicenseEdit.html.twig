@@ -1,0 +1,83 @@
+{% extends "LicenseBundle::layout.html.twig" %}
+
+{% block content %}
+
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="page-title">
+                <div class="title_left">
+                    <h3>Edycja licencji</h3>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_content">
+                            <br />
+                            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="#" method="post">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="{{ form.nazwa.vars.id }}">{{form_label(form.nazwa)}}<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        {{form_widget(form.nazwa)}}
+                                        {{form_errors(form.nazwa)}}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="{{ form.modul.vars.id }}">{{form_label(form.modul)}}<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        {{form_widget(form.modul)}}
+                                        {{form_errors(form.modul)}}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="{{ form.serialNumber.vars.id }}">{{form_label(form.serialNumber)}}<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        {{form_widget(form.serialNumber)}}
+                                        {{form_errors(form.serialNumber)}}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="{{ form.typCecha.vars.id }}">{{form_label(form.typCecha)}}<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        {{form_widget(form.typCecha)}}
+                                        {{form_errors(form.typCecha)}}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">{{ form_label(form.p2) }}
+                                            {{ form_errors(form.p2) }}
+                                        </label></br>
+
+
+
+                                        {{form_widget(form.p2[0], {'attr': {'class':'flat'} }) }}
+                                        {{form_label(form.p2[0])}}
+                                        {{form_widget(form.p2[1], {'attr': {'class':'flat'} }) }}
+                                        {{form_label(form.p2[1])}}
+
+                                    </div>
+                                </div>
+                                <div class="ln_solid"></div>
+                                <div class="form-group">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                        <button type="reset" class="btn btn-primary">Wyczyść</button>
+                                        {{ form_widget(form.save) }}
+                                    </div>
+                                    <div style="display:none;">
+                                        {{ form_rest(form) }}
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

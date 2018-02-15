@@ -1,0 +1,217 @@
+<?php
+
+namespace LicenseBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Licencje
+ *
+ * @ORM\Table(name="licencje")
+ * @ORM\Entity(repositoryClass="LicenseBundle\Repository\LicencjeRepository")
+ */
+class Licencje {
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\OneToMany(targetEntity="RezerwacjaI", mappedBy="idLicencje")
+     * @ORM\OneToMany(targetEntity="RezerwacjaII", mappedBy="idLicencje")
+     * @ORM\OneToMany(targetEntity="Wypozyczenie", mappedBy="idLicencje")
+
+     */
+    private $id;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="typ", type="boolean")
+     */
+    private $typ;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Nazwa", type="string", length=255, unique=true)
+     */
+    private $nazwa;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="p2", type="boolean")
+     */
+    private $p2;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Modul", type="string", length=255)
+     */
+    private $modul;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="SerialNumber", type="string", length=255)
+     */
+    private $serialNumber;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="TypCecha", type="string", length=255)
+     */
+    private $typCecha;
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId() {
+        return $this->id;
+    }
+
+    /**
+     * Set typ
+     *
+     * @param boolean $typ
+     *
+     * @return Licencje
+     */
+    public function setTyp($typ) {
+        $this->typ = $typ;
+
+        return $this;
+    }
+
+    /**
+     * Get typ
+     *
+     * @return boolean
+     */
+    public function getTyp() {
+        return $this->typ;
+    }
+
+    /**
+     * Set nazwa
+     *
+     * @param string $nazwa
+     *
+     * @return Licencje
+     */
+    public function setNazwa($nazwa) {
+        $this->nazwa = $nazwa;
+
+        return $this;
+    }
+
+    /**
+     * Get nazwa
+     *
+     * @return string
+     */
+    public function getNazwa() {
+        return $this->nazwa;
+    }
+
+    /**
+     * Set p2
+     *
+     * @param boolean $p2
+     *
+     * @return Licencje
+     */
+    public function setP2($p2) {
+        $this->p2 = $p2;
+
+        return $this;
+    }
+
+    /**
+     * Get p2
+     *
+     * @return boolean
+     */
+    public function getP2() {
+        return $this->p2;
+    }
+
+
+    /**
+     * Set modul
+     *
+     * @param string $modul
+     *
+     * @return Licencje
+     */
+    public function setModul($modul)
+    {
+        $this->modul = $modul;
+
+        return $this;
+    }
+
+    /**
+     * Get modul
+     *
+     * @return string
+     */
+    public function getModul()
+    {
+        return $this->modul;
+    }
+
+    /**
+     * Set serialNumber
+     *
+     * @param string $serialNumber
+     *
+     * @return Licencje
+     */
+    public function setSerialNumber($serialNumber)
+    {
+        $this->serialNumber = $serialNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get serialNumber
+     *
+     * @return string
+     */
+    public function getSerialNumber()
+    {
+        return $this->serialNumber;
+    }
+
+    /**
+     * Set typCecha
+     *
+     * @param string $typCecha
+     *
+     * @return Licencje
+     */
+    public function setTypCecha($typCecha)
+    {
+        $this->typCecha = $typCecha;
+
+        return $this;
+    }
+
+    /**
+     * Get typCecha
+     *
+     * @return string
+     */
+    public function getTypCecha()
+    {
+        return $this->typCecha;
+    }
+}

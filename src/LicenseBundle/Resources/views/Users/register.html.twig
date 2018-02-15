@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- Meta, title, CSS, favicons, etc. -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>EC Engineering</title>
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?v=2" />
+        <!-- Bootstrap -->
+        <link href="{{ asset('assets/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+        <!-- Font Awesome -->
+        <link href="{{ asset('assets/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+        <!-- Animate.css -->
+        <link href="{{ asset('assets/vendors/animate.css/animate.min.css') }}" rel="stylesheet">
+        <!-- Custom Theme Style -->
+        <link href="{{ asset('assets/css/custom.min.css') }}" rel="stylesheet">
+    </head>
+    <body class="login">
+        <div>
+            <a class="hiddenanchor" id="signup"></a>
+            <a class="hiddenanchor" id="signin"></a>
+            <div class="login_wrapper">
+                <div class="animate form login_form">
+                    <section class="login_content">
+                        {%if success%}
+                            <h1>Rejestracja</h1>
+                            <p>
+                                Na twój adres mailowy została wysłana wiadomość. Odczytaj ją, aby dokończyć rejestrację. 
+                                W razie problemów skontaktuj się z działem IT
+                            </p>
+                            <div class="clearfix"></div>
+                        {%else%}
+
+                            <form action="#" method="post">
+                                <h1>Rejestracja</h1>
+                                {%if error%}
+                                    <p>Twój mail nie znajduje sie w naszej bazie danych lub konto już istnieje. Sprawdź czy został wpisany poprawnie, w razie dalszych problemów skontaktuj się z działem IT</p>
+                                {%endif%}
+                                <div class="form-group">
+
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        {{form_widget(form.imie)}}
+                                        {{form_errors(form.imie)}}
+                                    </div>
+                                </div><br><br><br>
+                                <div class="form-group">
+
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        {{form_widget(form.nazwisko)}}
+                                        {{form_errors(form.nazwisko)}}
+                                    </div>
+                                </div><br><br><br>
+                                <div class="form-group">
+
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        {{form_widget(form.mail)}}
+                                        {{form_errors(form.mail)}}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <button class="btn btn-success" onclick="window.location.href = '{{path('login')}}'">Zaloguj</button>
+                                    {{ form_widget(form.save) }}
+                                    <div style="display:none;">
+                                        {{ form_rest(form) }}
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="separator">
+                                    <div class="clearfix"></div>
+                                    <br />
+                                    <div>
+                                        <h1><img style="max-height: 50px;" class="kadry" src="{{ asset('images/EClicencje.png')}}" alt="logo" /></h1>
+                                        <p>©2017 All Rights Reserved. EC Engineering Sp. z.o.o</p>
+                                    </div>
+                                </div>
+                            </form>
+                        {%endif%}
+                    </section>
+                </div>
+                <div id="register" class="animate form registration_form">
+                    <section class="login_content">
+                        <form>
+                            <h1>Zarejestruj się</h1>
+                            <div>
+                                <input type="text" class="form-control" placeholder="Login" required="" />
+                            </div>
+                            <div>
+                                <a class="btn btn-default submit" href="{#{ path('app_dashboard') }#}">Resetuj hasło</a>
+                                <a class="btn btn-default submit" href="#signin">Logowanie</a>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="separator">
+                                <div class="clearfix"></div>
+                                <br />
+                                <div>
+                                    <h1><img class="kadry" src="{{ asset('images/logo_ECkadry_305.png')}}" alt="logo" /></h1>
+                                    <p>©2017 All Rights Reserved. EC Engineering Sp. z.o.o</p>
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

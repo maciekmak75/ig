@@ -1,0 +1,20 @@
+license:
+    resource: "@LicenseBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+    
+login:
+    path:     /login
+    defaults: { _controller: LicenseBundle:Default:login }
+    
+
+homepage:
+    path:   /index
+    defaults:  { _controller: LicenseBundle:Default:index }
+    
+logout:
+    path:   /logout

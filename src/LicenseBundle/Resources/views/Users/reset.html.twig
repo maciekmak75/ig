@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- Meta, title, CSS, favicons, etc. -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>EC Engineering</title>
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?v=2" />
+        <!-- Bootstrap -->
+        <link href="{{ asset('assets/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+        <!-- Font Awesome -->
+        <link href="{{ asset('assets/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+        <!-- Animate.css -->
+        <link href="{{ asset('assets/vendors/animate.css/animate.min.css') }}" rel="stylesheet">
+        <!-- Custom Theme Style -->
+        <link href="{{ asset('assets/css/custom.min.css') }}" rel="stylesheet">
+    </head>
+    <body class="login">
+        <div>
+            <a class="hiddenanchor" id="signup"></a>
+            <a class="hiddenanchor" id="signin"></a>
+            <div class="login_wrapper">
+                <div class="animate form login_form">
+                    <section class="login_content">
+                        {%if success%}
+                            <h1>Resetuj hasło</h1>
+                            <p>
+                                Na twój adres mailowy zostało wysłane nowe hasło.<br>
+                                    W razie problemów skontaktuj się z działem IT
+                            </p>
+                            <div class="clearfix"></div>
+                        {%else%}
+
+                            {{form_start(form)}}
+                            <h1>Resetuj hasło</h1>
+                            {% if success%}
+                                <p>
+                                    Na twój adres mailowy zostało wysłane nowe hasło
+                                    W razie problemów skontaktuj się z działem IT
+
+                                </p>
+
+                            {% else %}
+                                {%if failed%}
+                                    <p>
+                                        Podany mail jest nieprawidłowy
+                                    </p>
+                                {%endif%}
+                                <div>
+                                    {{form_widget(form.mail)}}
+                                </div>
+                            {%endif%}
+
+                            <div>
+                                {{form_widget(form.save)}}
+                                <button type="button" class="btn btn-danger" onclick="window.location.href = '{{path('homepage')}}'">Logowanie</button>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="separator">
+                                <div class="clearfix"></div>
+                                <br />
+                                <div>
+                                    <h1><img style="max-height: 50px;" class="kadry" src="{{ asset('images/EClicencje.png')}}" alt="logo" /></h1>
+                                    <p>©2017 All Rights Reserved. EC Engineering Sp. z.o.o</p>
+                                </div>
+                            </div>
+                            {{form_end(form)}}
+                        {%endif%}
+                    </section>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

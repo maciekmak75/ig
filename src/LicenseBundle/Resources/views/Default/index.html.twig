@@ -1,0 +1,51 @@
+{% extends "LicenseBundle::layout.html.twig" %}
+
+{% block content %}
+
+    <div class="right_col" role="main">
+        <div class="">
+
+
+            <div class="clearfix"></div>
+
+            <div class="row dt-responsive">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel ">
+                        <div class="x_title">
+                            <h2>Witaj, {{ app.user.__toString() }}, w systemie. Twoje tłumaczenie:</h2>
+
+                            <div class="clearfix"></div>
+                            <div id="transcript"></div>
+                        </div>
+                        <div class="x_content dt-responsive">
+                            <button class="btn btn-success" id="button" onclick="toggleStartStop()"></button>
+
+                            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left"
+                                  action="#" method="post">
+                                <div class="form-group">
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        {{ form_widget(form.tresc) }}
+                                        {{ form_errors(form.tresc) }}
+                                    </div>
+                                </div>
+                                <div class="ln_solid"></div>
+                                <div class="form-group">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                        <button type="reset" id="reset" class="btn btn-primary">Wyczyść</button>
+                                        {{ form_widget(form.save) }}
+                                    </div>
+                                    <div style="display:none;">
+                                        {{ form_rest(form) }}
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

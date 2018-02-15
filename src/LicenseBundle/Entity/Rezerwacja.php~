@@ -1,0 +1,165 @@
+<?php
+
+namespace LicenseBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Rezerwacja
+ *
+ * @ORM\Table(name="rezerwacja")
+ * @ORM\Entity(repositoryClass="LicenseBundle\Repository\RezerwacjaRepository")
+ */
+class Rezerwacja
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var int
+     *
+     * @ORM\ManyToOne(targetEntity="Uzytkownik", inversedBy="id")
+     */
+    private $idUzytkownik;
+    
+        /**
+     * @var int
+     *
+     * @ORM\ManyToOne(targetEntity="Licencje", inversedBy="id")
+     */
+    private $idLicencje;
+    
+        /**
+     * @var date
+     *
+     * @ORM\Column(name="DataOd", type="date", nullable=true)
+     */
+    private $dataOd;
+    
+        /**
+     * @var date
+     *
+     * @ORM\Column(name="DataDo", type="date", nullable=true)
+     */
+    private $dataDo;
+    
+        /**
+     * @var bool
+     *
+     * @ORM\Column(name="typ", type="boolean")
+     */
+    private $typ;
+    
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set idUzytkownik
+     *
+     * @param \LicenseBundle\Entity\Uzytkownik $idUzytkownik
+     *
+     * @return Rezerwacja
+     */
+    public function setIdUzytkownik(\LicenseBundle\Entity\Uzytkownik $idUzytkownik = null)
+    {
+        $this->idUzytkownik = $idUzytkownik;
+
+        return $this;
+    }
+
+    /**
+     * Get idUzytkownik
+     *
+     * @return \LicenseBundle\Entity\Uzytkownik
+     */
+    public function getIdUzytkownik()
+    {
+        return $this->idUzytkownik;
+    }
+
+  
+    /**
+     * Set dataOd
+     *
+     * @param \DateTime $dataOd
+     *
+     * @return Rezerwacja
+     */
+    public function setDataOd($dataOd)
+    {
+        $this->dataOd = $dataOd;
+
+        return $this;
+    }
+
+    /**
+     * Get dataOd
+     *
+     * @return \DateTime
+     */
+    public function getDataOd()
+    {
+        return $this->dataOd;
+    }
+
+    /**
+     * Set dataDo
+     *
+     * @param \DateTime $dataDo
+     *
+     * @return Rezerwacja
+     */
+    public function setDataDo($dataDo)
+    {
+        $this->dataDo = $dataDo;
+
+        return $this;
+    }
+
+    /**
+     * Get dataDo
+     *
+     * @return \DateTime
+     */
+    public function getDataDo()
+    {
+        return $this->dataDo;
+    }
+
+    /**
+     * Set idLicencje
+     *
+     * @param \LicenseBundle\Entity\Licencje $idLicencje
+     *
+     * @return Rezerwacja
+     */
+    public function setIdLicencje(\LicenseBundle\Entity\Licencje $idLicencje = null)
+    {
+        $this->idLicencje = $idLicencje;
+
+        return $this;
+    }
+
+    /**
+     * Get idLicencje
+     *
+     * @return \LicenseBundle\Entity\Licencje
+     */
+    public function getIdLicencje()
+    {
+        return $this->idLicencje;
+    }
+}

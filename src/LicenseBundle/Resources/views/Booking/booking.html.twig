@@ -1,0 +1,258 @@
+{% extends "LicenseBundle::layout.html.twig" %}
+
+{% block content %}
+
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="page-title">
+                <div class="title_left">
+
+                    <h3>Rezerwacja licencji {% if app.request.attributes.get('typ') == 0 %}Catii{%else%}ProEngineer{%endif%}</h3>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="row dt-responsive">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel ">
+                        <h2>Twoje rezerwacje</h2>
+                        <div class="x_title">
+
+                        </div>
+                        <div class="x_content dt-responsive">
+                            <blockquote>
+
+                                {%if licI or licII%}
+                                    {%for data in licI if licI !=false%}
+                                        <p>{%if data.typ%}Wypożyczenie{%else%}Rezerwacja{%endif%} licencji {%if data.idLicencje.typ %}ProEngineer {%else%}Catia {%endif%} (I zmiana)
+                                            (<b>{{data.idLicencje.nazwa}}</b>): {{data.dataOd|date("d-m-Y")}} - {{data.dataDo|date("d-m-Y")}}</p>
+                                        {%endfor %}
+                                        {%for data in licII if licII !=false%}
+                                        <p>Rezerwacja licencji {%if data.idLicencje.typ %}ProEngineer {%else%}Catia {%endif%} (II zmiana)
+                                            (<b>{{data.idLicencje.nazwa}}</b>): {{data.dataOd|date("d-m-Y")}} - {{data.dataDo|date("d-m-Y")}}</p>
+                                        {%endfor %}
+                                    {%else%}
+                                    Aktualnie brak żadnych rezerwacji
+                                {%endif%}
+
+
+                            </blockquote>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2></h2>
+                            <div class="input-group">
+                                {#<button type="button" class="btn btn-success" data-toggle="modal" data-target=".bs-example-modal-lg">Dodaj licencję</button>#}
+                            </div>
+
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <table id="datatable-responsive50" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2">Nazwa</th>
+                                        <th colspan="3">I zmiana</th>
+                                        <th colspan="3">II zmiana</th>
+                                        <th rowspan="2">Akcja</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Od kiedy</td>
+                                        <td>Do kiedy</td>
+                                        <td>Kto</td>
+                                        <td>Od kiedy</td>
+                                        <td>Do kiedy</td>
+                                        <td>Kto</td>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {#{dump(rezI)}#}
+                                    {% for dane in lic  if lic|length != 0 %}
+                                        <tr>
+                                            <td>{{ dane.nazwa}} {{dane.modul}} {{dane.serialNumber}} {{dane.typCecha}}</td>
+                                            {#{dump(rezI[loop.index - 1 ])}#}
+                                            {%if rezI[loop.index - 1 ]!= false  %}
+
+                                                <td>{{rezI[loop.index - 1 ][0].dataOd|date('d-m-Y')}}</td>
+                                                <td>{{rezI[loop.index - 1 ][0].dataDo|date('d-m-Y')}}</td>
+                                                <td>{{rezI[loop.index - 1 ][0].idUzytkownik.__toString()}}</td>
+                                                {#<td><center>
+                                            {%if rezI[loop.index - 1 ][0].dataDo < currDate%}<a class="dropdown-toggle" title="Rezerwacja" data-toggle="dropdown" role="button" aria-expanded="false" onclick="window.location.href = '{{path('rezerwacjaLicencji', {'idLicencja':dane.id | urlencrypt, 'zmiana':0| urlencrypt})}}'"/><i class="fa fa-calendar"></i></a>{%endif%}
+                                            {%if is_granted('ROLE_ADMIN')%}<a class="dropdown-toggle" data-toggle="dropdown" title="Historia" role="button" aria-expanded="false" onclick="window.location.href = '{{path('rezerwacjaView' , {'idLicencja': dane.id |urlencrypt})}}'"><i class="fa fa-book"></i></a>{%endif %}
+                                            {%if is_granted('ROLE_PM') or (is_granted('ROLE_USER') and app.user.id == rezI[loop.index - 1 ][0].idUzytkownik.id) %}<a class="dropdown-toggle" data-toggle="dropdown" title="Anuluj rezerwację" role="button" aria-expanded="false" onclick="window.location.href = '{{path('rezerwacjaIDel', {'idRezerwacja': rezI[loop.index - 1 ][0].id |urlencrypt})}}'"><i class="fa fa-close"></i></a>{%endif%}
+                                        </center></td>#}
+                                            {%else%}
+                                                <td style="color: green;"><b><center></center></b></td>
+                                                <td style="color: green;"><b><center></center></b></td>
+                                                <td style="color: green;"><b><center>WOLNE</center></b></td>
+                                                        {%endif%}
+                                                        {%if rezII[loop.index -1 ]!= false %}
+
+                                                <td>{{rezII[loop.index -1 ][0].dataOd|date('d-m-Y')}}</td>
+                                                <td>{{rezII[loop.index -1 ][0].dataDo|date('d-m-Y')}}</td>
+                                                <td>{{rezII[loop.index -1 ][0].idUzytkownik.__toString()}}</td>
+
+                                            {%elseif rezI[loop.index - 1 ]!= false and rezI[loop.index - 1 ][0].typ %}
+                                                <td style="color: red;"><b><center></center></b>{#{dump(rezI[loop.index - 1 ] and not rezI[loop.index - 1 ][0].typ)}#}</td>
+                                                <td style="color: red;"><b><center></center></b></td>
+                                                <td style="color: red;"><b><center>WYPOŻYCZENIE</center></b></td>
+                                                        {%else%}
+                                                <td style="color: green;"><b><center></center></b></td>
+                                                <td style="color: green;"><b><center></center></b></td>
+                                                <td style="color: green;"><b><center>WOLNE</center></b></td>
+                                                        {%endif%}
+
+                                            {#%if rezI[loop.index - 1 ]!= false %}
+                                                {#%for data in rezI[loop.index -1 ]%#}
+                                            {#<td>{{rezI[loop.index - 1 ][0].dataOd|date('d-m-Y')}}</td>
+                                            <td>{{rezI[loop.index - 1 ][0].dataDo|date('d-m-Y')}}</td>
+                                            <td>{{rezI[loop.index - 1 ][0].idUzytkownik.__toString()}}</td>#}
+
+                                            {#<td>
+                                            <center>
+                                                {%if rezI[loop.index - 1 ][0].dataDo < currDate%}<a class="dropdown-toggle" title="Rezerwacja" data-toggle="dropdown" role="button" aria-expanded="false" onclick="window.location.href = '{{path('rezerwacjaLicencji', {'idLicencja':dane.id | urlencrypt, 'zmiana':0| urlencrypt})}}'"/><i class="fa fa-calendar"></i></a>{%endif%}
+                                                {%if is_granted('ROLE_ADMIN')%}<a class="dropdown-toggle" data-toggle="dropdown" title="Historia" role="button" aria-expanded="false" onclick="window.location.href = '{{path('rezerwacjaView' , {'idLicencja': dane.id |urlencrypt})}}'"><i class="fa fa-book"></i></a>{%endif %}
+                                                {%if is_granted('ROLE_PM') or (is_granted('ROLE_USER') and app.user.id == rezI[loop.index - 1 ][0].idUzytkownik.id)%}<a class="dropdown-toggle" data-toggle="dropdown" title="Anuluj rezerwację" role="button" aria-expanded="false" onclick="window.location.href = '{{path('rezerwacjaIDel', {'idRezerwacja': rezI[loop.index - 1 ][0].id |urlencrypt})}}'"><i class="fa fa-close"></i></a>{%endif%}
+                                            </center>
+                                            </td>#}
+                                            <td>                                                       
+                                                <ul class="nav navbar-right panel_toolbox">
+                                                    {%if 
+                                               not rezI[loop.index - 1 ]  or
+                                               rezI[loop.index - 1 ] and not rezI[loop.index - 1 ][0].typ and not rezII[loop.index - 1 ]or
+                                               not rezII[loop.index - 1 ] and not rezI[loop.index - 1 ]  or
+                                                rezI[loop.index - 1][0].dataDo == currDate or 
+                                                rezII[loop.index - 1] and rezII[loop.index - 1 ][0].dataDo == currDate 
+                                               
+
+                                                    %}  
+                                                    <li class="dropdown">
+                                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i style="color: #23527c" class="fa fa-calendar"></i></a>
+                                                        <ul class="dropdown-menu" role="menu">
+                                                            {%if not rezI[loop.index - 1 ]%}
+                                                                <li>
+                                                                    <a href="{{path('rezerwacjaLicencji', { 'idLicencja':  dane.id | urlencrypt,'zmiana': 0 | urlencrypt })}}">Rezerwuj I zmianę</a>
+                                                                </li>
+                                                            {%endif%}
+                                                            {%if not rezII[loop.index - 1 ] and rezI[loop.index - 1 ] and not rezI[loop.index - 1 ][0].typ %}
+                                                                <li>
+                                                                    <a href="{{path('rezerwacjaLicencji', { 'idLicencja': dane.id | urlencrypt,'zmiana': 1 | urlencrypt })}}">Rezerwuj II zmianę</a>
+                                                                </li>
+                                                            {% endif %}
+                                                            {%if not rezII[loop.index - 1 ] and not rezI[loop.index - 1 ] and is_granted('ROLE_ADMIN')%}
+                                                                <li>
+                                                                    <a href="{{path('rezerwacjaLicencji', { 'idLicencja': dane.id | urlencrypt,'zmiana': 0 | urlencrypt , 'wypozyczenie': 1 })}}">Wypożycz</a>
+                                                                </li> 
+                                                            {%endif%}
+                                                        </ul>
+                                                    </li>
+                                                    {%endif%}
+                                                        {%if (rezI[loop.index - 1 ] or rezII[loop.index - 1 ]) and is_granted('ROLE_PM')%}
+                                                            <li class="dropdown">
+                                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i style="color: #23527c" class="fa fa-wrench"></i></a>
+                                                                <ul class="dropdown-menu" role="menu">
+                                                                    {% if rezI[loop.index - 1 ] and not rezI[loop.index - 1 ][0].typ and (is_granted('ROLE_PM') or (is_granted('ROLE_USER') and app.user.id == rezI[loop.index - 1 ][0].idUzytkownik.id))%}
+                                                                        <li>
+                                                                            <a href="{{path('rezerwacjaLicencjiEdit', { 'idRezerwacja': rezI[loop.index - 1 ][0].id | urlencrypt, 'idLicencja':  dane.id | urlencrypt,'zmiana': 0 | urlencrypt })}}">Edytuj I zmianę</a>
+                                                                        </li>
+                                                                    {% endif %}
+                                                                    {% if rezII[loop.index - 1 ] and (is_granted('ROLE_PM') or (is_granted('ROLE_USER') and app.user.id == rezII[loop.index - 1 ][0].idUzytkownik.id))%}
+                                                                        <li>
+                                                                            <a href="{{path('rezerwacjaLicencjiEdit', { 'idRezerwacja': rezII[loop.index - 1 ][0].id | urlencrypt, 'idLicencja': dane.id | urlencrypt,'zmiana': 1 | urlencrypt })}}">Edytuj II zmianę</a>
+                                                                        </li>
+                                                                    {% endif %}
+                                                                    {% if rezI[loop.index - 1 ] and rezI[loop.index - 1 ][0].typ and is_granted('ROLE_ADMIN')%}
+                                                                        <li>
+                                                                            <a href="{{path('rezerwacjaLicencjiEdit', { 'idRezerwacja': rezI[loop.index - 1 ][0].id | urlencrypt, 'idLicencja': dane.id | urlencrypt,'zmiana': 0 | urlencrypt , 'wypozyczenie': 1 })}}">Edytuj wypożyczenie
+                                                                            </a>
+                                                                        </li> 
+                                                                    {%endif%}
+                                                                </ul>
+                                                            </li>
+                                                        {%endif%}
+                                                        {%if rezI[loop.index - 1 ] or rezII[loop.index - 1 ]%}
+                                                            <li class="dropdown">
+                                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i style="color: #23527c" class="fa fa-close"></i></a>
+                                                                <ul class="dropdown-menu" role="menu">
+                                                                    {% if rezI[loop.index - 1 ] and not rezI[loop.index - 1 ][0].typ and (is_granted('ROLE_PM') or (is_granted('ROLE_USER') and app.user.id == rezI[loop.index - 1 ][0].idUzytkownik.id))%}
+                                                                        <li>
+                                                                            <a href="{{path('rezerwacjaIDel', { 'idRezerwacja': rezI[loop.index - 1 ][0].id | urlencrypt})}}">Usuń I zmianę</a>
+                                                                        </li>
+                                                                    {% endif %}
+                                                                    {% if rezII[loop.index - 1 ] and (is_granted('ROLE_PM') or (is_granted('ROLE_USER') and app.user.id == rezII[loop.index - 1 ][0].idUzytkownik.id))%}
+                                                                        <li>
+                                                                            <a href="{{path('rezerwacjaIIDel', { 'idRezerwacja': rezII[loop.index - 1 ][0].id | urlencrypt})}}">Usuń II zmianę</a>
+                                                                        </li>
+                                                                    {% endif %}
+                                                                    {% if rezI[loop.index - 1 ] and rezI[loop.index - 1 ][0].typ and is_granted('ROLE_ADMIN')%}
+                                                                        <li>
+                                                                            <a href="{{path('rezerwacjaIDel', { 'idRezerwacja': rezI[loop.index - 1 ][0].id | urlencrypt})}}">Usuń wypożyczenie
+                                                                            </a>
+                                                                        </li> 
+                                                                    {%endif%}
+                                                                </ul>
+                                                            </li>
+                                                        {%endif%}
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            {#%endfor%#}
+
+                                            {#%else%}
+        
+                                            <td style="color: green;"><b><center>I zmiana - WOLNE</center></b></td>
+                                                        {#<td><center><a class="dropdown-toggle" title="Rezerwacja" data-toggle="dropdown" role="button" aria-expanded="false" onclick="window.location.href = '{{path('rezerwacjaLicencji', {'idLicencja':dane.id | urlencrypt, 'zmiana':0| urlencrypt})}}'"/><i class="fa fa-calendar"></i></a></center></td>#}
+                                            {#%endif%#}
+
+
+
+                                            {#%if rezII[loop.index -1 ]!= false %}
+                                                {#%for data in rezII[loop.index -1 ]%#}
+                                            {#  <td>{{rezII[loop.index -1 ][0].dataOd|date('d-m-Y')}}</td>
+                                              <td>{{rezII[loop.index -1 ][0].dataDo|date('d-m-Y')}}</td>
+                                              <td>{{rezII[loop.index -1 ][0].idUzytkownik.__toString()}}</td>
+        
+                                              {# <td >
+                                           <center>
+                                               {%if rezII[loop.index -1 ][0].dataDo < currDate%}<a class="dropdown-toggle" title="Rezerwacja" data-toggle="dropdown" role="button" aria-expanded="false" onclick="window.location.href = '{{path('rezerwacjaLicencji', {'idLicencja':dane.id | urlencrypt,'zmiana':1| urlencrypt})}}'"/><i class="fa fa-calendar"></i></a>{%endif%}
+                                               {%if is_granted('ROLE_ADMIN')%}<a class="dropdown-toggle" data-toggle="dropdown" title="Historia" role="button" aria-expanded="false" onclick="window.location.href = '{{path('rezerwacjaView' , {'idLicencja': dane.id |urlencrypt})}}'"><i class="fa fa-book"></i></a>
+                                                   {%endif %}
+                                                   {%if is_granted('ROLE_PM') or (is_granted('ROLE_USER') and app.user.id == rezII[loop.index - 1 ][0].idUzytkownik.id)%}<a class="dropdown-toggle" data-toggle="dropdown" title="Anuluj rezerwację" role="button" aria-expanded="false" onclick="window.location.href = '{{path('rezerwacjaIIDel', {'idRezerwacja': rezII[loop.index -1 ][0].id |urlencrypt})}}'"><i class="fa fa-close"></i></a>{%endif%}
+                                           </center>
+                                           </td>#}
+
+                                            {#%endfor%#}
+
+                                            {#%else%}
+                                                <td style="color: green;"><b><center>II zmiana - WOLNE</center></b></td>
+                                                            {#<td><center><a class="dropdown-toggle" title="Rezerwacja" data-toggle="dropdown" role="button" aria-expanded="false" onclick="window.location.href = '{{path('rezerwacjaLicencji', {'idLicencja':dane.id | urlencrypt,'zmiana':1| urlencrypt})}}'"/><i class="fa fa-calendar"></i></a></center></td>#}
+                                            {#%endif%#}
+
+
+
+
+                                            {#%endif%#}
+                                            </tr>
+                                            {% endfor %}  
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                    <script>
+
+                    </script>
+                    {% endblock %}
+
